@@ -7,3 +7,12 @@ Outputs/
 # data
 data/
 *.zip
+
+# --- Lab data / large files ---
+data/
+*.zip
+*.zip:Zone.Identifier
+*:Zone.Identifier
+*.root
+Outputs/
+build/
