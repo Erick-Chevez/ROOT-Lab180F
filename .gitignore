@@ -1,5 +1,4 @@
 # build / outputs
-build/
 Outputs/
 *.root
 *.log
@@ -8,10 +7,9 @@ Outputs/
 data/
 *.zip
 
-# --- Lab data / large files ---
+# Large lab data / Windows metadata
 data/
 *.zip
-*.zip:Zone.Identifier
 *:Zone.Identifier
 *.root
 Outputs/
