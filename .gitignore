@@ -1,0 +1,9 @@
+# build / outputs
+build/
+Outputs/
+*.root
+*.log
+
+# data
+data/
+*.zip
