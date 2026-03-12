@@ -1,6 +1,6 @@
-void FitTailTau()
+void FitTauAl()
 {
-  TString inFile = "../Outputs/outputPb.root";
+  TString inFile = "../../Outputs/outputAl.root";
   Double_t hardMin = 0.2;   // never fit earlier than this (us)
   Double_t fitMax  = 9.0;  // match your histogram range (us)
 
@@ -10,7 +10,7 @@ void FitTailTau()
   TFile *f = TFile::Open(inFile, "READ");
   if (!f || f->IsZombie()) { Printf("ERROR: could not open %s", inFile.Data()); return; }
 
-  gSystem->mkdir("../Outputs/Fits", kTRUE);
+  gSystem->mkdir("../../Outputs/Fits/Raw/Al", kTRUE);
 
   TF1 *fexp = new TF1("fexp", "[0]*exp(-x/[1])", hardMin, fitMax);
   fexp->SetParNames("A","tau");
@@ -82,7 +82,7 @@ void FitTailTau()
     latex.DrawLatex(0.15, 0.80, Form("Fit range: [%.3f, %.3f] #mus", fitStart, fitMax));
     latex.DrawLatex(0.15, 0.75, Form("Model: A e^{-t/#tau}   (no background)"));
 
-    c->SaveAs(Form("../Outputs/Fits/Raw/%s_RawPb.png", tag));
+    c->SaveAs(Form("../../Outputs/Fits/Raw/Al/%s_RawAl.png", tag));
     delete c;
   };
 

@@ -1,6 +1,6 @@
-void FitABCTau()
+void FitFloatPb()
 {
-  TString inFile = "../Outputs/outputPb.root";
+  TString inFile = "../../Outputs/outputPb.root";
 
   TFile *f = TFile::Open(inFile, "READ");
   if (!f || f->IsZombie()) {
@@ -8,7 +8,7 @@ void FitABCTau()
     return;
   }
 
-  gSystem->mkdir("../Outputs/Fits", kTRUE);
+  gSystem->mkdir("../../Outputs/Fits/FloatC/Pb", kTRUE);
 
   auto DoFit = [&](const char* hname, const char* tag, Double_t fitMin, Double_t fitMax)
   {
@@ -79,7 +79,7 @@ void FitABCTau()
     latex.DrawLatex(0.15, 0.75, Form("Fit range: [%.3f, %.3f] #mus", fitMin, fitMax));
     latex.DrawLatex(0.15, 0.70, "Model: A e^{-t/#tau} + C");
 
-    c->SaveAs(Form("../Outputs/Fits/FloatC/%s_FloatPb.png", tag));
+    c->SaveAs(Form("../../Outputs/Fits/FloatC/Pb/%s_FloatPb.png", tag));
 
     delete c;
   };
