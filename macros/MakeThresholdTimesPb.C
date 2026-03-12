@@ -21,15 +21,15 @@
 #include "TObjArray.h"
 #include "TObjString.h"
 
-void MakeThresholdTimes()
+void MakeThresholdTimesPb()
 {
   // ----------------------------
   // User settings
   // ----------------------------
   const Double_t thr = -0.2;                 // threshold in Volts
-  const TString inDir  = "../data/Fe";       // folder containing CSVs
+  const TString inDir  = "../data/Pb";       // folder containing CSVs
   const TString outDir = "../Outputs";       // where output.root will be saved
-  const TString outFileName = outDir + "/output.root";
+  const TString outFileName = outDir + "/outputPb.root";
 
   // Histogram binning (edit if you know your time window better)
   const Int_t    nBins = 50;
@@ -57,7 +57,7 @@ void MakeThresholdTimes()
   // ----------------------------
   // List CSV files in input directory using ROOT's directory tools
   // ----------------------------
-  TSystemDirectory dir("FeDir", inDir);
+  TSystemDirectory dir("PbDir", inDir);
   TList *files = dir.GetListOfFiles();
   if (!files) {
     Error("MakeThresholdTimes", "Could not list files in: %s", inDir.Data());
@@ -137,7 +137,7 @@ void MakeThresholdTimes()
       // --- Channel A threshold detection ---
       if (!foundA) {
         if (havePrevA) {
-          if ((prevA > thr) && (a <= thr) && (t >= 0.2)) { foundA = kTRUE; tA = t; }
+          if ((prevA > thr) && (a <= thr) && (t >= 0.1)) { foundA = kTRUE; tA = t; }
         }
         prevA = a; havePrevA = kTRUE;
       }
@@ -145,7 +145,7 @@ void MakeThresholdTimes()
       // --- Channel B threshold detection ---
       if (!foundB) {
         if (havePrevB) {
-          if ((prevB > thr) && (b <= thr) && (t >= 0.2)) { foundB = kTRUE; tB = t; }
+          if ((prevB > thr) && (b <= thr) && (t >= 0.1)) { foundB = kTRUE; tB = t; }
         }
         prevB = b; havePrevB = kTRUE;
       }
@@ -153,7 +153,7 @@ void MakeThresholdTimes()
       // --- Channel C threshold detection ---
       if (!foundC) {
         if (havePrevC) {
-          if ((prevC > thr) && (c <= thr) && (t >= 0.2)) { foundC = kTRUE; tC = t; }
+          if ((prevC > thr) && (c <= thr) && (t >= 0.1)) { foundC = kTRUE; tC = t; }
         }
         prevC = c; havePrevC = kTRUE;
       }
@@ -212,4 +212,4 @@ void MakeThresholdTimes()
 // If you execute with `.x MakeThresholdTimes.C`, ROOT will look for a function
 // matching the file name sometimes depending on your setup.
 // To be safe, we provide a wrapper with the same base name.
-void MakeThresholdTimes_C() { MakeThresholdTimes(); }
+void MakeThresholdTimesPb_C() { MakeThresholdTimesPb(); }

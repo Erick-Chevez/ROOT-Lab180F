@@ -21,15 +21,15 @@
 #include "TObjArray.h"
 #include "TObjString.h"
 
-void MakeThresholdTimes()
+void MakeThresholdTimesNoTarget()
 {
   // ----------------------------
   // User settings
   // ----------------------------
   const Double_t thr = -0.2;                 // threshold in Volts
-  const TString inDir  = "../data/Fe";       // folder containing CSVs
+  const TString inDir  = "../data/NoTarget";       // folder containing CSVs
   const TString outDir = "../Outputs";       // where output.root will be saved
-  const TString outFileName = outDir + "/output.root";
+  const TString outFileName = outDir + "/outputNoTarget.root";
 
   // Histogram binning (edit if you know your time window better)
   const Int_t    nBins = 50;
@@ -57,7 +57,7 @@ void MakeThresholdTimes()
   // ----------------------------
   // List CSV files in input directory using ROOT's directory tools
   // ----------------------------
-  TSystemDirectory dir("FeDir", inDir);
+  TSystemDirectory dir("NoTargetDir", inDir);
   TList *files = dir.GetListOfFiles();
   if (!files) {
     Error("MakeThresholdTimes", "Could not list files in: %s", inDir.Data());
@@ -170,7 +170,7 @@ void MakeThresholdTimes()
     Bool_t usedThisFile = kFALSE;
 
     if (foundA) { hTimeA->Fill(tA); usedThisFile = kTRUE; }
-    if (foundB ) { hTimeB->Fill(tB); usedThisFile = kTRUE; }
+    if (foundB) { hTimeB->Fill(tB); usedThisFile = kTRUE; }
     if (foundC) { hTimeC->Fill(tC); usedThisFile = kTRUE; }
 
     if (usedThisFile){ 
@@ -184,6 +184,7 @@ void MakeThresholdTimes()
   }
   
 
+
   // ----------------------------
   // Write output
   // ----------------------------
@@ -192,6 +193,22 @@ void MakeThresholdTimes()
   hTimeB->Write();
   hTimeC->Write();
 
+  int b1A = hTimeA->FindBin(1.0);
+  int b2A = hTimeA->FindBin(8.999999);
+  double CA = hTimeA->Integral(b1A, b2A) / (b2A - b1A + 1);
+
+  int b1B = hTimeB->FindBin(2.0);
+  int b2B = hTimeB->FindBin(8.999999);
+  double CB = hTimeB->Integral(b1B, b2B) / (b2B - b1B + 1);
+
+  int b1C = hTimeC->FindBin(2.0);
+  int b2C = hTimeC->FindBin(8.999999);
+  double CC = hTimeC->Integral(b1C, b2C) / (b2C - b1C + 1);
+
+  cout << "CA = " << CA << endl;
+  cout << "CB = " << CB << endl;
+  cout << "CC = " << CC << endl;
+  
   // Optional: store a little run summary as TNamed strings (no std:: needed)
   {
     TString s1; s1.Form("CSV files found: %d", nCSV);
@@ -201,7 +218,7 @@ void MakeThresholdTimes()
   }
 
   fout->Close();
-
+  
   Printf("Done.");
   Printf("  Input folder:  %s", inDir.Data());
   Printf("  CSV files:     %d", nCSV);
@@ -212,4 +229,4 @@ void MakeThresholdTimes()
 // If you execute with `.x MakeThresholdTimes.C`, ROOT will look for a function
 // matching the file name sometimes depending on your setup.
 // To be safe, we provide a wrapper with the same base name.
-void MakeThresholdTimes_C() { MakeThresholdTimes(); }
+void MakeThresholdTimesNoTarget_C() { MakeThresholdTimesNoTarget(); }
