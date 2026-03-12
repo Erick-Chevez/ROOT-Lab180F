@@ -1,7 +1,5 @@
 # build / outputs
-Outputs/
-*.root
-*.log
+
 
 # data
 data/
@@ -11,6 +9,3 @@ data/
 data/
 *.zip
 *:Zone.Identifier
-*.root
-Outputs/
-build/
